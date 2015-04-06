@@ -47,10 +47,7 @@ class Rolodex
   def modify_existing_contact(contact)
     return false if contact == nil
     puts "What would you like to edit?"
-    puts "[1] = First Name"
-    puts "[2] = Last Name"
-    puts "[3] = Email"
-    puts "[4] = Notes"
+    display_attributes
 
     case gets.chomp
       when "1"
@@ -90,6 +87,38 @@ class Rolodex
     puts "#{contact.first_name} #{contact.last_name}"
     puts "Email: #{contact.email}"
     puts "Notes: #{contact.notes}"
+  end
+
+  def display_attributes
+    puts "[1] = First Name"
+    puts "[2] = Last Name"
+    puts "[3] = Email"
+    puts "[4] = Notes"
+  end
+
+  def display_contacts_with_attribute
+    puts "Select a number to see that info for all contacts."
+    display_attributes
+    case gets.chomp
+      when "1"
+        @contact_list.each do |contact|
+          puts "Contact ##{contact.id}: #{contact.first_name}"
+        end
+      when "2"
+        @contact_list.each do |contact|
+          puts "Contact ##{contact.id}: #{contact.last_name}"
+        end
+      when "3"
+        @contact_list.each do |contact|
+          puts "Contact ##{contact.id}: #{contact.email}"
+        end
+      when "4"
+        @contact_list.each do |contact|
+          puts "Contact ##{contact.id}: #{contact.notes}"
+        end
+      else
+        false
+      end
   end
 end
 
