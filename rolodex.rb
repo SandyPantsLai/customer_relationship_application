@@ -42,7 +42,26 @@ class Rolodex
   end
 
   def display_error
-    puts "Invalid option.  Please select another option.\n"
+    puts "--------------------ERROR--------------------"
+    puts "Invalid option. Please select another option."
+    puts "--------------------ERROR--------------------"
+    puts "                     ||                     "
+    puts "           Select a  ||  new option         "
+    puts "                     \\/                    "
+    return false
+  end
+
+  def empty_list_error
+    if @contact_list == []
+      puts "\n\n\n"
+      puts "--------------------ERROR--------------------"
+      puts "     There are no contacts in your list.     "
+      puts "--------------------ERROR--------------------"
+      puts "                     ||                     "
+      puts "           Select a  ||  new option         "
+      puts "                     \\/                    "
+      return true
+    end
     return false
   end
 
@@ -57,12 +76,14 @@ class Rolodex
   end
 
   def choose_contact
+    return false if empty_list_error
     puts "Please enter a contact ID."
     display_all_contacts
     gets.chomp
   end
 
   def confirm_input(id)
+    return false if id == false
     return display_error unless contact = @contact_list.find {|contact| contact.id == id.to_i}
     puts "You have entered #{id}.  Is this correct?  Type 'yes' to continue to 'no' to return to the main menu."
     confirm = gets.chomp.strip.downcase
@@ -98,14 +119,19 @@ class Rolodex
   end
 
   def display_all_contacts
+    return false if empty_list_error
+    puts "---------------------------------------------"
     @contact_list.each do |contact|
       puts "Contact ##{contact.id}:  #{contact.first_name} #{contact.last_name}"
     end
+    puts "---------------------------------------------"
   end
 
   def display_contact_info
+    return false if empty_list_error
     display_all_contacts
     puts "Enter the ID number of the contact you wish to view."
+    puts "---------------------------------------------"
 
     contact = @contact_list.find {|contact| contact.id == gets.chomp.to_i}
     return display_error if contact == nil
@@ -114,6 +140,7 @@ class Rolodex
     puts "#{contact.first_name} #{contact.last_name}"
     puts "Email: #{contact.email}"
     puts "Notes: #{contact.notes}"
+    puts "---------------------------------------------"
   end
 
   def display_attributes
@@ -121,9 +148,11 @@ class Rolodex
     puts "[2] = Last Name"
     puts "[3] = Email"
     puts "[4] = Notes"
+    puts "---------------------------------------------"
   end
 
   def display_contacts_with_attribute
+    return false if empty_list_error
     puts "Select a number to see that info for all contacts."
     display_attributes
     case gets.chomp
@@ -144,8 +173,8 @@ class Rolodex
           puts "Contact ##{contact.id}: #{contact.notes}"
         end
       else
-        puts "Invalid option"
-        false
+        display_error
       end
     end
+    puts "---------------------------------------------"
   end

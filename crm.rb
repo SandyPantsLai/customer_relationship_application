@@ -1,4 +1,4 @@
-require_relative "contacts"
+require_relative "contact"#require "./contact" is an alternative or load "contract.rb"(though it will reload this each time.  With require, once "required", not reloaded.)
 require_relative "rolodex"
 
 class CRM
@@ -24,6 +24,9 @@ class CRM
   end
 
   def print_main_menu
+    puts "============================================="
+    puts "~~~~ * ~ * ~ * ~ * Main Menu * ~ * ~ * ~ * ~~"
+    puts "============================================="
     puts "[1] Add a new contact"
     puts "[2] Modify an existing contact"
     puts "[3] Delete a contact"
@@ -31,6 +34,7 @@ class CRM
     puts "[5] Display info for contact"
     puts "[6] Display an attribute for all contacts"
     puts "[7] Exit"
+    puts "---------------------------------------------"
     puts "Enter a number: "
   end
 
