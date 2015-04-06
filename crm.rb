@@ -1,4 +1,4 @@
-require_relative "contact"#require "./contact" is an alternative or load "contract.rb"(though it will reload this each time.  With require, once "required", not reloaded.)
+require_relative "contact"
 require_relative "rolodex"
 
 class CRM

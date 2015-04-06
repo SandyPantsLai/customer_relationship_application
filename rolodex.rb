@@ -82,13 +82,22 @@ class Rolodex
     gets.chomp
   end
 
+  def find_contact(id)
+    contact = @contact_list.find {|contact| contact.id == id.to_i}
+  end
+
   def confirm_input(id)
     return false if id == false
-    return display_error unless contact = @contact_list.find {|contact| contact.id == id.to_i}
+    return display_error unless contact = find_contact(id)
     puts "You have entered #{id}.  Is this correct?  Type 'yes' to continue to 'no' to return to the main menu."
     confirm = gets.chomp.strip.downcase
-    return false if confirm == "no" || confirm == "n"
-    else contact
+    if confirm == "no" || confirm == "n"
+      return false
+    elsif confirm == "yes" || confirm == "y"
+      return contact
+    else
+      display_error
+    end
   end
 
   def modify_existing_contact(contact)
@@ -133,9 +142,9 @@ class Rolodex
     puts "Enter the ID number of the contact you wish to view."
     puts "---------------------------------------------"
 
-    contact = @contact_list.find {|contact| contact.id == gets.chomp.to_i}
-    return display_error if contact == nil
+    return display_error unless contact = find_contact(gets.chomp.to_i)
 
+    puts "---------------------------------------------"
     puts "Contact ##{contact.id}"
     puts "#{contact.first_name} #{contact.last_name}"
     puts "Email: #{contact.email}"
@@ -155,20 +164,25 @@ class Rolodex
     return false if empty_list_error
     puts "Select a number to see that info for all contacts."
     display_attributes
+
     case gets.chomp
       when "1"
+        puts "-------- * ~ * -- FIRST NAMES -- * ~ * ------"
         @contact_list.each do |contact|
           puts "Contact ##{contact.id}: #{contact.first_name}"
         end
       when "2"
+        puts "-------- * ~ * -- LAST NAMES -- * ~ * -------"
         @contact_list.each do |contact|
           puts "Contact ##{contact.id}: #{contact.last_name}"
         end
       when "3"
+        puts "------ * ~ * -- EMAIL ADDRESSES -- * ~ * ----"
         @contact_list.each do |contact|
           puts "Contact ##{contact.id}: #{contact.email}"
         end
       when "4"
+        puts "----------- * ~ * -- NOTES -- * ~ * ---------"
         @contact_list.each do |contact|
           puts "Contact ##{contact.id}: #{contact.notes}"
         end
@@ -176,5 +190,4 @@ class Rolodex
         display_error
       end
     end
-    puts "---------------------------------------------"
   end
