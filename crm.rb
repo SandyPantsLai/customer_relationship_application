@@ -18,17 +18,35 @@ class Rolodex
     @contact_id = 0
   end
 
-  def add_new_contact
+  def enter_first_name(contact)
     print "Enter First Name: "
-    first_name = gets.chomp
+    contact.first_name = gets.chomp
+  end
+
+  def enter_last_name(contact)
     print "Enter Last Name: "
-    last_name = gets.chomp
+    contact.last_name = gets.chomp
+  end
+
+  def enter_email(contact)
     print "Enter Email Address: "
-    email = gets.chomp.strip
+    contact.email = gets.chomp.strip
+  end
+
+  def enter_notes(contact)
     print "Enter a Note: "
-    notes = gets.chomp
+    contact.notes = gets.chomp
+  end
+
+  def add_new_contact
     @contact_id += 1
-    @contact_list.push(Contact.new(@contact_id, first_name, last_name, email, notes))
+    contact = Contact.new(@contact_id, "Jane", "Doe", "test@test.com", "Sample notes")
+    enter_first_name(contact)
+    enter_last_name(contact)
+    enter_email(contact)
+    enter_notes(contact)
+    @contact_list.push(contact)
+  # end
   end
 
   def choose_contact
@@ -51,17 +69,14 @@ class Rolodex
 
     case gets.chomp
       when "1"
-        puts "Enter the first name."
-        contact.first_name = gets.chomp
+        enter_first_name(contact)
       when "2"
-        puts "Enter the last name."
-        contact.last_name = gets.chomp
+        enter_last_name(contact)
       when "3"
-        puts "Enter the email address."
-        contact.email = gets.chomp
+       enter_email(contact)
       when "4"
         puts "Enter some notes for this contact."
-        contact.notes = gets.chomp
+        enter_notes(contact)
       else
         false
       end
