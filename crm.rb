@@ -21,32 +21,47 @@ class Rolodex
   def enter_first_name(contact)
     print "Enter First Name: "
     contact.first_name = gets.chomp
+    if contact.first_name == ""
+      puts "This is a required field."
+      enter_first_name(contact)
+    end
   end
 
   def enter_last_name(contact)
     print "Enter Last Name: "
     contact.last_name = gets.chomp
+    if contact.last_name == ""
+      puts "This is a required field."
+      enter_last_name(contact)
+    end
   end
 
   def enter_email(contact)
     print "Enter Email Address: "
     contact.email = gets.chomp.strip
+    if contact.email == ""
+      puts "This is a required field."
+      enter_email(contact)
+    end
   end
 
   def enter_notes(contact)
     print "Enter a Note: "
     contact.notes = gets.chomp
+    if contact.notes == ""
+      puts "This is a required field."
+      enter_notes(contact)
+    end
   end
 
   def add_new_contact
     @contact_id += 1
-    contact = Contact.new(@contact_id, "Jane", "Doe", "test@test.com", "Sample notes")
+    contact = Contact.new(@contact_id, "", "", "", "")
     enter_first_name(contact)
     enter_last_name(contact)
     enter_email(contact)
     enter_notes(contact)
     @contact_list.push(contact)
-  # end
   end
 
   def choose_contact
