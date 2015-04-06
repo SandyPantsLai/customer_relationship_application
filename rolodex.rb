@@ -6,7 +6,7 @@ class Rolodex
   end
 
   def enter_first_name(contact)
-    print "Enter First Name: "
+    print "Enter the first name: "
     contact.first_name = gets.chomp
     if contact.first_name == ""
       puts "This is a required field."
@@ -15,7 +15,7 @@ class Rolodex
   end
 
   def enter_last_name(contact)
-    print "Enter Last Name: "
+    print "Enter the last name: "
     contact.last_name = gets.chomp
     if contact.last_name == ""
       puts "This is a required field."
@@ -24,7 +24,7 @@ class Rolodex
   end
 
   def enter_email(contact)
-    print "Enter Email Address: "
+    print "Enter the email address: "
     contact.email = gets.chomp.strip
     if contact.email == ""
       puts "This is a required field."
@@ -33,7 +33,7 @@ class Rolodex
   end
 
   def enter_notes(contact)
-    print "Enter a Note: "
+    print "Enter a note: "
     contact.notes = gets.chomp
     if contact.notes == ""
       puts "This is a required field."
@@ -63,14 +63,15 @@ class Rolodex
   end
 
   def confirm_input(id)
+    return display_error unless contact = @contact_list.find {|contact| contact.id == id.to_i}
     puts "You have entered #{id}.  Is this correct?  Type 'yes' to continue to 'no' to return to the main menu."
     confirm = gets.chomp.strip.downcase
-    return nil if confirm == "no" || confirm == "n"
-    else @contact_list.find {|contact| contact.id == id.to_i}
+    return false if confirm == "no" || confirm == "n"
+    else contact
   end
 
   def modify_existing_contact(contact)
-    return false if contact == nil
+    return false if contact == false
 
     puts "What would you like to edit?"
     display_attributes
@@ -91,7 +92,7 @@ class Rolodex
   end
 
   def delete_contact(contact)
-    display_error if contact == nil
+    return display_error if contact == nil
 
     @contact_list.delete(contact)
   end
@@ -107,7 +108,7 @@ class Rolodex
     puts "Enter the ID number of the contact you wish to view."
 
     contact = @contact_list.find {|contact| contact.id == gets.chomp.to_i}
-    display_error if contact == nil
+    return display_error if contact == nil
 
     puts "Contact ##{contact.id}"
     puts "#{contact.first_name} #{contact.last_name}"
