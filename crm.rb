@@ -40,7 +40,7 @@ class Rolodex
   def confirm_input(id)
     puts "You have entered #{id}.  Is this correct?  Type 'yes' to continue to 'no' to return to the main menu."
     confirm = gets.chomp.strip.downcase
-    nil if confirm == "no" || confirm == "n"
+    return nil if confirm == "no" || confirm == "n"
     else @contact_list.find {|contact| contact.id == id.to_i}
   end
 
@@ -77,16 +77,32 @@ class Rolodex
 
   def display_all_contacts
     @contact_list.each do |contact|
-      puts "Contact ID: #{contact.id} #{contact.first_name} #{contact.last_name}"
+      puts "Contact ##{contact.id}:  #{contact.first_name} #{contact.last_name}"
     end
+  end
+
+  def display_contact_info
+    display_all_contacts
+    puts "Enter the ID number of the contact you wish to view."
+
+    contact = @contact_list.find {|contact| contact.id == gets.chomp.to_i}
+    puts "Contact ##{contact.id}"
+    puts "#{contact.first_name} #{contact.last_name}"
+    puts "Email: #{contact.email}"
+    puts "Notes: #{contact.notes}"
   end
 end
 
 class CRM
+
+  def self.run(company)
+    crm = CRM.new(company)
+    crm.main_menu
+  end
+
   def initialize(company)
     puts "Welcome to #{company} Customer Relations App.  Please choose a menu item."
     @company = Rolodex.new
-    main_menu
   end
 
   def call_option(user_selected)
@@ -119,4 +135,4 @@ class CRM
   end
 end
 
-CRM.new("Bitmaker Labs")
+CRM.run("Bitmaker Labs")
