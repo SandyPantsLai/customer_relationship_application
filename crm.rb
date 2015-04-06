@@ -11,12 +11,13 @@ class Contact
 end
 
 class Rolodex
+  attr_accessor :contact_list
   def initialize
     @contact_list = []
     @contact_id = 0
   end
 
-  def add_new_contact
+def add_new_contact
   print "Enter First Name: "
   first_name = gets.chomp
   print "Enter Last Name: "
@@ -28,7 +29,29 @@ class Rolodex
   @contact_id += 1
   @contact_list.push(Contact.new(@contact_id, first_name, last_name, email, notes))
   end
+
+  def choose_contact
+    puts "Please enter a contact ID."
+    display_all_contacts
+    gets.chomp
+  end
+
+  def confirm_input(id)
+    puts "You have entered #{id}.  Is this correct?  Type 'yes' to continue to 'no' to return to the main menu."
+    confirm = gets.chomp.strip.downcase
+    id = nil if confirm == "no" || confirm = "n"
+    else id
+  end
+
+  def modify_existing_contact(id)
+    # return main_menu if id == nil
+  end
+
+  def display_all_contacts
+  end
 end
+
+
 
 class CRM
   def initialize(company)
@@ -39,7 +62,7 @@ class CRM
 
   def call_option(user_selected)
     @company.add_new_contact if user_selected == 1
-    modify_existing_contact if user_selected == 2
+    @company.modify_existing_contact(@company.confirm_input(@company.choose_contact))if user_selected == 2
     delete_contact if user_selected == 3
     display_all_contacts if user_selected == 4
     display_contact_info if user_selected == 5
